@@ -3,6 +3,8 @@ require 'princely/asset_support'
 
 module Princely
   module PdfHelper
+    include AssetSupport
+
     def self.included(base)
       base.send :alias_method, :render_without_princely, :render
       base.send :alias_method, :render, :render_with_princely
@@ -51,10 +53,6 @@ module Princely
       end
     end
 
-    def asset_file_path(asset)
-      asset = asset.to_s.gsub('.css', '')
-      File.join(config.stylesheets_dir, "#{asset}.css")
-    end
     alias_method :stylesheet_file_path, :asset_file_path
 
     def make_and_send_pdf(pdf_name, options = {})
